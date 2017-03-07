@@ -49,4 +49,4 @@ RUN fpm \
     -d $(for i in `ldd /tmp/fpm/usr/local/sbin/nginx  | awk '{print $1}'`; do dpkg -S $i 2>/dev/null | cut -f1 -d:; done | sort -u | sed ':a;N;s/\n/ -d /;ba') \
     -C /tmp/fpm \
     -p /openresty-${version}-amd64.deb \
-    usr etc run var
+    usr etc run var lib

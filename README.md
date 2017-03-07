@@ -1,6 +1,6 @@
 # Build Openresty
 
-You will need a working Docker host. When you have ghat, clone the repo and run a command like this:
+You will need a working Docker host. When you have that, clone this repo and run a command like this:
 
     docker build --build-arg version=1.11.2.2 --build-arg maintainer="Will Jessop <will@willj.net>" .
 

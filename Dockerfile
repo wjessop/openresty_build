@@ -40,7 +40,7 @@ RUN fpm \
     -s dir \
     -t deb \
     -m "${maintainer}" \
-    --description "Openresty build by Will Jessop. See Homepage for buld info link." \
+    --description "Openresty build by Will Jessop. See Homepage medatata for build info link." \
     --url "https://github.com/wjessop/openresty_build" \
     -n openresty \
     -a amd64 \

@@ -21,8 +21,12 @@ WORKDIR /tmp/openresty
 RUN ./configure --with-pcre-jit --with-ipv6 --with-http_v2_module --prefix=/usr/local/nginx \
   --conf-path=/etc/nginx/nginx.conf --pid-path=/run/nginx.pid --sbin-path=/usr/local/sbin/nginx \
   --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log \
+  --lock-path=/var/lock/nginx.lock --http-client-body-temp-path=/var/lib/nginx/body \
+  --http-fastcgi-temp-path=/var/lib/nginx/fastcgi --http-proxy-temp-path=/var/lib/nginx/proxy \
+  --http-scgi-temp-path=/var/lib/nginx/scgi --http-uwsgi-temp-path=/var/lib/nginx/uwsgi\
   --user=www-data \
   -j$processors
+
 RUN make -j$processors
 RUN make install DESTDIR=/tmp/fpm
 
@@ -34,6 +38,8 @@ RUN mv /tmp/fpm/usr/local/nginx/nginx/html /tmp/fpm/usr/share/nginx
 RUN rmdir /tmp/fpm/usr/local/nginx/nginx
 
 ADD files /tmp/fpm
+
+RUN mkdir -p /tmp/fpm/var/lib/nginx/body
 
 RUN ["/usr/bin/gem", "install", "fpm", "--bindir=/usr/bin", "--no-rdoc", "--no-ri"]
 RUN fpm \

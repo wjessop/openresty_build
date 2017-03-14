@@ -1,5 +1,6 @@
 FROM ubuntu:14.04
 ARG version
+ARG iteration
 ARG maintainer
 ARG processors=8
 
@@ -49,6 +50,7 @@ RUN fpm \
     --description "Openresty build by Will Jessop. See Homepage medatata for build info link." \
     --url "https://github.com/wjessop/openresty_build" \
     -n nginx \
+    --iteration openresty~$iteration \
     -a amd64 \
     -v $version \
     -d libluajit-5.1-2 \

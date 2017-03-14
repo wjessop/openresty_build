@@ -40,6 +40,10 @@ RUN rmdir /tmp/fpm/usr/local/nginx/nginx
 
 ADD files /tmp/fpm
 
+# Workaround. Nothing I can do seems to allow me to add the scripts directory, Docker insists on copying the files out of it.
+RUN mkdir -p /tmp/scripts
+ADD scripts /tmp/scripts
+
 RUN mkdir -p /tmp/fpm/var/lib/nginx/body
 
 RUN ["/usr/bin/gem", "install", "fpm", "--bindir=/usr/bin", "--no-rdoc", "--no-ri"]
@@ -55,6 +59,8 @@ RUN fpm \
     -v $version \
     -d libluajit-5.1-2 \
     -d $(for i in `ldd /tmp/fpm/usr/local/sbin/nginx  | awk '{print $1}'`; do dpkg -S $i 2>/dev/null | cut -f1 -d:; done | sort -u | sed ':a;N;s/\n/ -d /;ba') \
+    --after-install /tmp/scripts/after_install.sh \
+    --after-remove /tmp/scripts/after_remove.sh \
     -C /tmp/fpm \
     -p /openresty-${version}-amd64.deb \
     usr etc run var lib

@@ -51,7 +51,7 @@ RUN fpm \
     -s dir \
     -t deb \
     -m "${maintainer}" \
-    --description "Openresty build by Will Jessop. See Homepage medatata for build info link." \
+    --description "Openresty Nginx build by Will Jessop. See Homepage metadata for build info link." \
     --url "https://github.com/wjessop/openresty_build" \
     -n nginx \
     --iteration openresty~$iteration \
@@ -62,5 +62,5 @@ RUN fpm \
     --after-install /tmp/scripts/after_install.sh \
     --after-remove /tmp/scripts/after_remove.sh \
     -C /tmp/fpm \
-    -p /openresty-${version}-amd64.deb \
+    -p /nginx-${version}-amd64.deb \
     usr etc run var lib

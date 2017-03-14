@@ -48,7 +48,7 @@ RUN fpm \
     -m "${maintainer}" \
     --description "Openresty build by Will Jessop. See Homepage medatata for build info link." \
     --url "https://github.com/wjessop/openresty_build" \
-    -n openresty \
+    -n nginx \
     -a amd64 \
     -v $version \
     -d libluajit-5.1-2 \

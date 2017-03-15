@@ -26,6 +26,8 @@ RUN ./configure --with-pcre-jit --with-ipv6 --with-http_v2_module --prefix=/usr/
   --http-fastcgi-temp-path=/var/lib/nginx/fastcgi --http-proxy-temp-path=/var/lib/nginx/proxy \
   --http-scgi-temp-path=/var/lib/nginx/scgi --http-uwsgi-temp-path=/var/lib/nginx/uwsgi\
   --user=www-data \
+  --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module \
+  --with-http_ssl_module --with-http_stub_status_module \
   -j$processors
 
 RUN make -j$processors

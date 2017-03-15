@@ -3,6 +3,7 @@ ARG version
 ARG iteration
 ARG maintainer
 ARG processors=8
+ARG mod_zip_version=1.1.6
 
 # Install a recent Ruby for FPM
 RUN apt-get update
@@ -12,7 +13,11 @@ RUN apt-add-repository ppa:brightbox/ruby-ng
 RUN apt-get update
 RUN apt-get upgrade -y
 
-RUN apt-get install -y git binutils make ruby2.3 ruby2.3-dev ruby-switch dpkg-dev libpcre3-dev libssl-dev
+RUN apt-get install -y git binutils make ruby2.3 ruby2.3-dev ruby-switch dpkg-dev libpcre3-dev libssl-dev curl
+
+# Add in any extra modules we want. Note that headers_more and mod_echo is already bundled with openresty
+RUN mkdir /tmp/mod_zip
+RUN curl -L https://github.com/evanmiller/mod_zip/archive/${mod_zip_version}.tar.gz | tar oxzC /tmp/mod_zip --strip-components 1
 
 ADD https://openresty.org/download/openresty-${version}.tar.gz /tmp/openresty.tar.gz
 RUN mkdir /tmp/openresty
@@ -28,6 +33,7 @@ RUN ./configure --with-pcre-jit --with-ipv6 --with-http_v2_module --prefix=/usr/
   --user=www-data \
   --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module \
   --with-http_ssl_module --with-http_stub_status_module \
+  --add-module=/tmp/mod_zip \
   -j$processors
 
 RUN make -j$processors

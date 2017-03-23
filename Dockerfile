@@ -34,7 +34,7 @@ RUN ./configure --with-pcre-jit --with-ipv6 --with-http_v2_module --prefix=/usr/
   --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module \
   --with-http_ssl_module --with-http_stub_status_module \
   --add-module=/tmp/mod_zip \
-  -j$processors
+  -j$processors --with-debug
 
 RUN make -j$processors
 RUN make install DESTDIR=/tmp/fpm

@@ -61,8 +61,8 @@ RUN fpm \
     -m "${maintainer}" \
     --description "Openresty Nginx build by Will Jessop. See Homepage metadata for build info link." \
     --url "https://github.com/wjessop/openresty_build" \
-    -n nginx \
-    --iteration openresty~$iteration \
+    -n openresty \
+    --iteration $iteration \
     -a amd64 \
     -v $version \
     -d libluajit-5.1-2 \
@@ -70,5 +70,5 @@ RUN fpm \
     --after-install /tmp/scripts/after_install.sh \
     --after-remove /tmp/scripts/after_remove.sh \
     -C /tmp/fpm \
-    -p /nginx-${version}-amd64.deb \
+    -p /openresty-${version}-amd64.deb \
     usr etc run var lib

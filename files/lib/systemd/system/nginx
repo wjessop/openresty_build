@@ -1,6 +1,6 @@
 [Unit]
 Description=A high performance web server and a reverse proxy server
-After=network.target
+After=syslog.target network.target remote-fs.target nss-lookup.target
 
 [Service]
 Type=forking
@@ -9,6 +9,7 @@ ExecStartPre=/usr/local/sbin/nginx -t -q -g 'daemon on; master_process on;'
 ExecStart=/usr/local/sbin/nginx -g 'daemon on; master_process on;'
 ExecReload=/usr/local/sbin/nginx -g 'daemon on; master_process on;' -s reload
 ExecStop=/usr/local/sbin/nginx -s quit
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target

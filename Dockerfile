@@ -24,7 +24,7 @@ RUN mkdir /tmp/openresty
 RUN tar zxf /tmp/openresty.tar.gz -C /tmp/openresty --strip-components 1
 
 WORKDIR /tmp/openresty
-RUN ./configure --with-pcre-jit --with-ipv6 --with-http_v2_module --prefix=/usr/local/nginx \
+RUN ./configure --with-pcre-jit --with-http_v2_module --prefix=/usr/local/nginx \
   --conf-path=/etc/nginx/nginx.conf --pid-path=/run/nginx.pid --sbin-path=/usr/local/sbin/nginx \
   --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log \
   --lock-path=/var/lock/nginx.lock --http-client-body-temp-path=/var/lib/nginx/body \

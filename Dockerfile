@@ -17,7 +17,8 @@ RUN apt-get install -y git binutils make ruby2.3 ruby2.3-dev ruby-switch dpkg-de
 
 # Add in any extra modules we want. Note that headers_more and mod_echo is already bundled with openresty
 RUN mkdir /tmp/mod_zip
-RUN curl -L https://github.com/evanmiller/mod_zip/archive/${mod_zip_version}.tar.gz | tar oxzC /tmp/mod_zip --strip-components 1
+# RUN curl -L https://github.com/evanmiller/mod_zip/archive/${mod_zip_version}.tar.gz | tar oxzC /tmp/mod_zip --strip-components 1
+RUN curl -L https://github.com/evanmiller/mod_zip/archive/master.tar.gz | tar oxzC /tmp/mod_zip --strip-components 1
 
 ADD https://openresty.org/download/openresty-${version}.tar.gz /tmp/openresty.tar.gz
 RUN mkdir /tmp/openresty

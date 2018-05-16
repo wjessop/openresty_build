@@ -15,12 +15,6 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -y git binutils make ruby2.3 ruby2.3-dev ruby-switch dpkg-dev libpcre3-dev libssl-dev curl
 
-# Add in any extra modules we want. Note that headers_more and mod_echo is already bundled with openresty
-RUN mkdir /tmp/mod_zip
-# There's a bug in 1.1.6 that's fixed in master, use that for now.
-# RUN curl -L https://github.com/evanmiller/mod_zip/archive/${mod_zip_version}.tar.gz | tar oxzC /tmp/mod_zip --strip-components 1
-RUN curl -L https://github.com/evanmiller/mod_zip/archive/master.tar.gz | tar oxzC /tmp/mod_zip --strip-components 1
-
 ADD https://openresty.org/download/openresty-${version}.tar.gz /tmp/openresty.tar.gz
 RUN mkdir /tmp/openresty
 RUN tar zxf /tmp/openresty.tar.gz -C /tmp/openresty --strip-components 1
@@ -35,7 +29,6 @@ RUN ./configure --with-pcre-jit --with-http_v2_module --prefix=/usr/local/nginx 
   --user=www-data \
   --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module \
   --with-http_ssl_module --with-http_stub_status_module \
-  --add-module=/tmp/mod_zip \
   -j$processors --with-debug
 
 RUN make -j$processors

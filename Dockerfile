@@ -21,6 +21,11 @@ RUN mkdir /tmp/mod_zip
 # RUN curl -L https://github.com/evanmiller/mod_zip/archive/${mod_zip_version}.tar.gz | tar oxzC /tmp/mod_zip --strip-components 1
 RUN curl -L https://github.com/evanmiller/mod_zip/archive/master.tar.gz | tar oxzC /tmp/mod_zip --strip-components 1
 
+# https://news.ycombinator.com/item?id=17400566
+RUN git clone --depth 1 https://github.com/eustas/ngx_brotli /tmp/ngx_brotli
+WORKDIR /tmp/ngx_brotli
+RUN git submodule update --init
+
 ADD https://openresty.org/download/openresty-${version}.tar.gz /tmp/openresty.tar.gz
 RUN mkdir /tmp/openresty
 RUN tar zxf /tmp/openresty.tar.gz -C /tmp/openresty --strip-components 1
@@ -36,6 +41,7 @@ RUN ./configure --with-pcre-jit --with-http_v2_module --prefix=/usr/local/nginx 
   --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module \
   --with-http_ssl_module --with-http_stub_status_module \
   --add-module=/tmp/mod_zip \
+  --add-module=/tmp/ngx_brotli \
   -j$processors --with-debug
 
 RUN make -j$processors
